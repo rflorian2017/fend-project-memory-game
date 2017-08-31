@@ -10,6 +10,9 @@
  *   - add each card's HTML to the page
  */
 
+//declaration of the card deck
+let cardDeck = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"] ;
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -25,6 +28,22 @@ function shuffle(array) {
     return array;
 }
 
+const doc = this.document;
+let deck = doc.getElementsByClassName("deck")[0];
+
+function makeDock() {
+	//reset the table
+	deck.innerHTML = '';
+	cardDeck = shuffle(cardDeck);
+	cardDeck.forEach(function(item) {
+		let li = document.createElement("li");
+		let innerI = document.createElement("i");
+		li.className = "card open show";
+		innerI.className = "fa " + item;
+		li.appendChild(innerI);
+		deck.appendChild(li);
+	} );
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -36,3 +55,5 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+ 
+ makeDock();
