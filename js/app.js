@@ -31,6 +31,7 @@ let deck = doc.getElementsByClassName("deck");
 let cardDeck = doc.getElementsByClassName("card");
 let deckOfCards = [];
 let restartButton = doc.getElementsByClassName("fa-repeat")[0];
+let openCards = [];
 
 function resetGame() {
 	for(card of deckOfCards) {
@@ -47,15 +48,52 @@ function resetGame() {
 	for(card of deckOfCards) {
 		deck[0].appendChild(card);
 	}
+	
+	openCards = [];
+}
+
+function matchCards(card1, card2) {
+	card1.classList.remove("show");
+	card2.classList.remove("show");
+	card1.classList.add("match");
+	card2.classList.add("match");
+}
+
+function unlockCards(card1, card2) {
+	card1.classList.remove("open","show");
+	card2.classList.remove("open","show");
+}
+
+function updateOpenCards(card) {
+	openCards.push(card);
+	if((openCards.length > 1) && (openCards.length % 2 === 0)) {
+		if(openCards[openCards.length-2].childNodes[1].classList.value === openCards[openCards.length-1].childNodes[1].classList.value) {
+			matchCards(openCards[openCards.length-1], openCards[openCards.length-2]);
+		}
+		
+		else {
+			unlockCards(openCards[openCards.length-1], openCards[openCards.length-2]);
+			openCards.pop();
+			openCards.pop();
+		}
+	}
 }
 
 restartButton.onclick = function() {
 	resetGame();
-	console.log("push");
 }
 
+
+
 function changeCardAppearance(card) {
-	card.classList.add("open","show");
+	if(card.classList.contains("show") || card.classList.contains("match")) 
+	{
+		console.log("opened");
+	}
+	else{ 
+		card.classList.add("open","show");
+		updateOpenCards(card);
+	}
 }
 
 function makeDock() {
