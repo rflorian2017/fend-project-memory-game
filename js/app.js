@@ -10,8 +10,6 @@
  *   - add each card's HTML to the page
  */
 
-//declaration of the card deck
-let cardDeck = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"] ;
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -29,7 +27,9 @@ function shuffle(array) {
 }
 
 const doc = this.document;
-let deck = doc.getElementsByClassName("deck")[0];
+let deck = doc.getElementsByClassName("deck");
+let cardDeck = doc.getElementsByClassName("card");
+let deckOfCards = [];
 
 function changeCardAppearance(card) {
 	card.classList.add("open","show");
@@ -37,20 +37,24 @@ function changeCardAppearance(card) {
 
 function makeDock() {
 	//reset the table
-	deck.innerHTML = '';
-	cardDeck = shuffle(cardDeck);
-	cardDeck.forEach(function(item) {
-		let li = document.createElement("li");
-		let innerI = document.createElement("i");
-		li.className = "card";
-		innerI.className = "fa " + item;
-		li.appendChild(innerI);
-		let card = deck.appendChild(li);
-		console.log(card);
-		card.onclick = function() {
+	for(card of cardDeck) {
+		card.classList.remove("open");
+		card.classList.remove("match");
+		card.classList.remove("show");
+		card.onclick = function(item) {
 			changeCardAppearance(this);
 		};
-	} );
+		deckOfCards.push(card);		
+	}
+	
+	while(cardDeck.length > 0){
+        cardDeck[0].remove();
+    }
+	
+	deckOfCards = shuffle(deckOfCards);
+	for(card of deckOfCards) {
+		deck[0].appendChild(card);
+	}
 }
 
 
