@@ -31,6 +31,10 @@ function shuffle(array) {
 const doc = this.document;
 let deck = doc.getElementsByClassName("deck")[0];
 
+function changeCardAppearance(card) {
+	card.classList.add("open","show");
+}
+
 function makeDock() {
 	//reset the table
 	deck.innerHTML = '';
@@ -38,12 +42,18 @@ function makeDock() {
 	cardDeck.forEach(function(item) {
 		let li = document.createElement("li");
 		let innerI = document.createElement("i");
-		li.className = "card open show";
+		li.className = "card";
 		innerI.className = "fa " + item;
 		li.appendChild(innerI);
-		deck.appendChild(li);
+		let card = deck.appendChild(li);
+		console.log(card);
+		card.onclick = function() {
+			changeCardAppearance(this);
+		};
 	} );
 }
+
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
