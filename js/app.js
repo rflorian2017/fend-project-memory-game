@@ -30,6 +30,29 @@ const doc = this.document;
 let deck = doc.getElementsByClassName("deck");
 let cardDeck = doc.getElementsByClassName("card");
 let deckOfCards = [];
+let restartButton = doc.getElementsByClassName("fa-repeat")[0];
+
+function resetGame() {
+	for(card of deckOfCards) {
+		card.classList.remove("open");
+		card.classList.remove("match");
+		card.classList.remove("show");	
+	}
+	
+	while(cardDeck.length > 0){
+        cardDeck[0].remove();
+    }
+	
+	deckOfCards = shuffle(deckOfCards);
+	for(card of deckOfCards) {
+		deck[0].appendChild(card);
+	}
+}
+
+restartButton.onclick = function() {
+	resetGame();
+	console.log("push");
+}
 
 function changeCardAppearance(card) {
 	card.classList.add("open","show");
