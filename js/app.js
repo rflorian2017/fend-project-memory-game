@@ -32,6 +32,13 @@ let cardDeck = doc.getElementsByClassName("card");
 let deckOfCards = [];
 let restartButton = doc.getElementsByClassName("fa-repeat")[0];
 let openCards = [];
+let score = doc.getElementsByClassName("moves")[0];
+let stars = doc.getElementsByClassName("fa-star");
+let emptiedStars = [];
+
+function incrementMoveCounter() {
+	score.innerHTML++;
+}
 
 function resetGame() {
 	for(card of deckOfCards) {
@@ -50,6 +57,11 @@ function resetGame() {
 	}
 	
 	openCards = [];
+	score.innerHTML = 0;
+	
+	for(star of emptiedStars) {
+		star.classList.add("fa-star");
+	}
 }
 
 function matchCards(card1, card2) {
@@ -59,20 +71,48 @@ function matchCards(card1, card2) {
 	card2.classList.add("match");
 }
 
-function unlockCards(card1, card2) {
+function lockCards(card1, card2) {
+	setTimeout(function() {
+		
 	card1.classList.remove("open","show");
 	card2.classList.remove("open","show");
+	}, 500);
 }
 
+function displayWinningMessage() {
+	alert("Yippppeeee! You won with " + score.innerHTML + " moves!");
+}
+
+function updateStars() {
+	if(12 < score.innerText && score.innerText < 16) {
+		if(stars.length === 3) 
+		stars[2].classList.remove("fa-star");
+	}
+	else if(16 <= score.innerText && score.innerText < 20) {
+		if(stars.length === 2)
+		stars[1].classList.remove("fa-star");
+	}
+	else if(20 <= score.innerText){
+		if(stars.length === 1)
+		stars[0].classList.remove("fa-star");
+	}
+}
+	
 function updateOpenCards(card) {
 	openCards.push(card);
 	if((openCards.length > 1) && (openCards.length % 2 === 0)) {
+		incrementMoveCounter();
+		
 		if(openCards[openCards.length-2].childNodes[1].classList.value === openCards[openCards.length-1].childNodes[1].classList.value) {
 			matchCards(openCards[openCards.length-1], openCards[openCards.length-2]);
+			if(openCards.length == 16) {
+				setTimeout(function() {displayWinningMessage();}, 500);
+			}
 		}
 		
 		else {
-			unlockCards(openCards[openCards.length-1], openCards[openCards.length-2]);
+			updateStars();
+			lockCards(openCards[openCards.length-1], openCards[openCards.length-2]);
 			openCards.pop();
 			openCards.pop();
 		}
@@ -88,7 +128,7 @@ restartButton.onclick = function() {
 function changeCardAppearance(card) {
 	if(card.classList.contains("show") || card.classList.contains("match")) 
 	{
-		console.log("opened");
+		// do nothing
 	}
 	else{ 
 		card.classList.add("open","show");
@@ -116,6 +156,12 @@ function makeDock() {
 	for(card of deckOfCards) {
 		deck[0].appendChild(card);
 	}
+	
+	score.innerHTML = 0;
+	
+	emptiedStars.push(stars[2]);
+	emptiedStars.push(stars[1]);
+	emptiedStars.push(stars[0]);
 }
 
 
