@@ -112,15 +112,6 @@ h1 {
 
 @media screen and (max-width: 690px) {
   .deck {
-
-
-
-
-
-
-
-
-
 	  width: calc(100vw - 50px - 3em);
 	  min-height: 100px;
 	  height: calc(100vw - 50px - 3em);
