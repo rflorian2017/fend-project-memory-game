@@ -32,12 +32,23 @@ let cardDeck = doc.getElementsByClassName("card");
 let deckOfCards = [];
 let restartButton = doc.getElementsByClassName("fa-repeat")[0];
 let openCards = [];
-let score = doc.getElementsByClassName("moves")[0];
+let movesElement = doc.getElementsByClassName("moves")[0];
 let stars = doc.getElementsByClassName("fa-star");
 let emptiedStars = [];
+let timer = 0;
+let score = 0;
+let interval = undefined;
 
 function incrementMoveCounter() {
-	score.innerHTML++;
+	score++;
+}
+
+function starTimer() {
+	interval = this.setInterval(function(){ 
+		++timer;
+		movesElement.innerHTML = "Time since start: " + this.toHHMMSS(timer/2) + " | " + score; 
+	}, 
+	500);
 }
 
 function resetGame() {
@@ -57,11 +68,13 @@ function resetGame() {
 	}
 	
 	openCards = [];
-	score.innerHTML = 0;
+	score = 0;
+	timer = 0;
 	
 	for(star of emptiedStars) {
 		star.classList.add("fa-star");
 	}
+	starTimer();
 }
 
 function matchCards(card1, card2) {
@@ -80,19 +93,22 @@ function lockCards(card1, card2) {
 }
 
 function displayWinningMessage() {
-	alert("Yippppeeee! You won with " + score.innerHTML + " moves!");
+	if (confirm("Yippppeeee! You won with " + score + " moves!\nDo you want to play a new round?") == true) {
+		resetGame();
+	}
+	clearInterval(interval);
 }
 
 function updateStars() {
-	if(12 < score.innerText && score.innerText < 16) {
+	if(12 < score && score < 16) {
 		if(stars.length === 3) 
 		stars[2].classList.remove("fa-star");
 	}
-	else if(16 <= score.innerText && score.innerText < 20) {
+	else if(16 <= score && score < 20) {
 		if(stars.length === 2)
 		stars[1].classList.remove("fa-star");
 	}
-	else if(20 <= score.innerText){
+	else if(20 <= score){
 		if(stars.length === 1)
 		stars[0].classList.remove("fa-star");
 	}
@@ -157,13 +173,25 @@ function makeDock() {
 		deck[0].appendChild(card);
 	}
 	
-	score.innerHTML = 0;
+	movesElement.innerHTML = "Time since start: " + this.toHHMMSS(timer) + " | " + score;
 	
 	emptiedStars.push(stars[2]);
 	emptiedStars.push(stars[1]);
 	emptiedStars.push(stars[0]);
+	starTimer();
 }
 
+function toHHMMSS(plainString) {
+    var sec_num = parseInt(plainString, 10); // don't forget the second param
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    return hours+':'+minutes+':'+seconds;
+}
 
 
 /*
