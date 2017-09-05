@@ -28,6 +28,8 @@ function shuffle(array) {
 
 const doc = this.document;
 let deck = doc.getElementsByClassName("deck");
+let scorePanel = document.getElementsByClassName("score-panel")[0];
+let winningModal = document.getElementsByClassName("winning-modal")[0];
 let cardDeck = doc.getElementsByClassName("card");
 let deckOfCards = [];
 let restartButton = doc.getElementsByClassName("fa-repeat")[0];
@@ -56,6 +58,7 @@ function resetGame() {
 		card.classList.remove("open");
 		card.classList.remove("match");
 		card.classList.remove("show");	
+		card.classList.remove("no-match");
 	}
 	
 	while(cardDeck.length > 0){
@@ -78,8 +81,8 @@ function resetGame() {
 }
 
 function matchCards(card1, card2) {
-	card1.classList.remove("show");
-	card2.classList.remove("show");
+	card1.classList.remove("show","before-match", "before-match2");
+	card2.classList.remove("show","before-match", "before-match2");
 	card1.classList.add("match");
 	card2.classList.add("match");
 }
@@ -87,12 +90,16 @@ function matchCards(card1, card2) {
 function lockCards(card1, card2) {
 	setTimeout(function() {
 		
-	card1.classList.remove("open","show");
-	card2.classList.remove("open","show");
+	card1.classList.remove("open","show","before-no-match1","before-no-match2","before-no-match3","before-no-match4", "no-match");
+	card2.classList.remove("open","show","before-no-match1","before-no-match2","before-no-match3","before-no-match4", "no-match");
 	}, 500);
 }
 
 function displayWinningMessage() {
+	deck[0].style.opacity = 0;
+	deck[0].style.zIndex = -1;
+	winningModal.classList.add("winning-modal-transition");
+	scorePanel.style.opacity = 1;
 	if (confirm("Yippppeeee! You won with " + score + " moves!\nDo you want to play a new round?") == true) {
 		resetGame();
 	}
@@ -120,7 +127,11 @@ function updateOpenCards(card) {
 		incrementMoveCounter();
 		
 		if(openCards[openCards.length-2].childNodes[1].classList.value === openCards[openCards.length-1].childNodes[1].classList.value) {
-			matchCards(openCards[openCards.length-1], openCards[openCards.length-2]);
+			openCards[openCards.length-1].classList.add("before-match", "before-match2");
+			openCards[openCards.length-2].classList.add("before-match", "before-match2");
+			setTimeout(function() {
+				matchCards(openCards[openCards.length-1], openCards[openCards.length-2]);}, 200);
+			
 			if(openCards.length == 16) {
 				setTimeout(function() {displayWinningMessage();}, 500);
 			}
@@ -128,9 +139,25 @@ function updateOpenCards(card) {
 		
 		else {
 			updateStars();
-			lockCards(openCards[openCards.length-1], openCards[openCards.length-2]);
-			openCards.pop();
-			openCards.pop();
+			openCards[openCards.length-1].classList.add("no-match", "before-no-match1");
+			openCards[openCards.length-2].classList.add("no-match", "before-no-match1");
+			setTimeout(function() {
+				openCards[openCards.length-1].classList.add("before-no-match2");
+				openCards[openCards.length-2].classList.add("before-no-match2");
+			},100);
+			setTimeout(function() {
+				openCards[openCards.length-1].classList.add("before-no-match3");
+				openCards[openCards.length-2].classList.add("before-no-match3");
+			},100);
+			setTimeout(function() {
+				openCards[openCards.length-1].classList.add("before-no-match4");
+				openCards[openCards.length-2].classList.add("before-no-match4");
+			},200);
+			setTimeout(function() {
+				lockCards(openCards[openCards.length-1], openCards[openCards.length-2]);
+				openCards.pop();
+				openCards.pop();
+			}, 200);
 		}
 	}
 }
