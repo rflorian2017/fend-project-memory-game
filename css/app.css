@@ -69,7 +69,7 @@ h1 {
 }
 
 .deck .card.open {
-    transform: rotateY(180deg);
+    transform: rotateY(0deg);
 	transition: 0.4s;
     background: #02b3e4;
     cursor: default;
@@ -97,7 +97,7 @@ h1 {
 
 .deck .card.match {
 	transition:0.2s;
-	transform: rotateY(0);
+	transform: rotateY(0deg);
     cursor: default;
     background: #02ccba;
     font-size: 33px;
@@ -183,11 +183,19 @@ h1 {
 }
 
 .play-again {
-	background: #02b3e4;
+	background: #26bfb2;
 	text-align: center;
     color: #ffffff;
     border-radius: 3px;
 	width : 150px;
-	heght: 25px;
+	height: 30px;
 	box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+	position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.winning-score {
+    text-align: center;
 }
