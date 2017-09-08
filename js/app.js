@@ -76,6 +76,7 @@ function resetGame() {
 	
 	for(star of emptiedStars) {
 		star.classList.add("fa-star");
+		star.classList.remove("fa-star-o");
 	}
 	starTimer();
 }
@@ -108,16 +109,16 @@ function displayWinningMessage() {
 
 function updateStars() {
 	if(12 < score && score < 16) {
-		if(stars.length === 3) 
-		stars[2].classList.remove("fa-star");
+		emptiedStars[0].classList.add("fa-star-o");
+		emptiedStars[0].classList.remove("fa-star");
 	}
 	else if(16 <= score && score < 20) {
-		if(stars.length === 2)
-		stars[1].classList.remove("fa-star");
+		emptiedStars[1].classList.add("fa-star-o");
+		emptiedStars[1].classList.remove("fa-star");
 	}
 	else if(20 <= score){
-		if(stars.length === 1)
-		stars[0].classList.remove("fa-star");
+		emptiedStars[2].classList.add("fa-star-o");
+		emptiedStars[2].classList.remove("fa-star");
 	}
 }
 	
