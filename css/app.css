@@ -75,6 +75,7 @@ h1 {
     cursor: default;
 }
 
+/* for each card , add some css to enable effects on the cards , so that the player can see some nice effects */
 .deck .card.before-match {
 	transition: 0.4s;
     background: #02b3e4;
@@ -169,6 +170,7 @@ h1 {
     cursor: pointer;
 }
 
+/* add effects for the winning modal and the appearance */
 .winning-modal {
   opacity: 0;
   position: absolute;
@@ -182,6 +184,11 @@ h1 {
 	opacity: 1;
 }
 
+.winning-message {
+	text-align: center;
+}
+
+/* add css effects to the re-play button */
 .play-again {
 	background: #26bfb2;
 	text-align: center;
