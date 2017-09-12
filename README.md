@@ -18,8 +18,7 @@ b) If they do not match, an effect will make you know they do not match. They wi
 
 The moves will increase by one at any two opened cards.
 
-If your moves are less than 12 you will win with 3 stars. If you have between 13 and 15 moves, you will win with 2 stars.
-If your moves are between 16 and 19, you will win with one star. Otherwise, you will still win, but you will have no stars.
+If your moves are less than 12 you will win with 3 stars. Otherwise, you will still win, but you will have only one star.
 
 When all cards match, a winning message will appear , showing how many stars you got, how many moves you used and the total time spent in the game.
 To restart, you can refresh the page, you can click on the refresh button under the title. Or , you can win and click the "Play again" button to re-start the game.

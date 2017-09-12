@@ -100,7 +100,7 @@ function resetGame() {
     winningModal.style.zIndex = -1;
     deck[0].style.zIndex = 1;
     scorePanel.style.opacity = 1;
-    scorePanel.style.zIndex = -1;
+    scorePanel.style.zIndex = 1;
 	
 	//reset the stars
 	starsWon = 3;
@@ -144,18 +144,14 @@ function displayWinningMessage() {
 function updateStars() {
 	//update the stars , the empty stars show how you managed in the game
     if (12 < score && score < 16) {
-        emptiedStars[0].classList.add("fa-star-o");
-        emptiedStars[0].classList.remove("fa-star");
-		starsWon = 2;
-    } else if (16 <= score && score < 20) {
         emptiedStars[1].classList.add("fa-star-o");
         emptiedStars[1].classList.remove("fa-star");
+		starsWon = 2;
+    } else if (16 <= score && score < 20) {
+        emptiedStars[0].classList.add("fa-star-o");
+        emptiedStars[0].classList.remove("fa-star");
 		starsWon = 1;
-    } else if (20 <= score) {
-        emptiedStars[2].classList.add("fa-star-o");
-        emptiedStars[2].classList.remove("fa-star");
-		starsWon = 0;
-    }
+	}
 }
 
 function updateOpenCards(card) {
@@ -258,7 +254,6 @@ function makeDeck() {
     movesElement.innerHTML = "Time since start: " + this.toHHMMSS(timer) + " | " + score;
 
 	//add the stars elements in an array
-    emptiedStars.push(stars[2]);
     emptiedStars.push(stars[1]);
     emptiedStars.push(stars[0]);
 	//start the timer
